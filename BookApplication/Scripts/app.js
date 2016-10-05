@@ -1,8 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
-    //ko = knockout
-    //knockout library provides us with observabled which get notified of data changes
     self.books = ko.observableArray();
+    self.error = ko.observable();
     self.detail = ko.observable();
     self.authors = ko.observableArray();
     self.newBook = {
@@ -12,7 +11,6 @@
         Title: ko.observable(),
         Year: ko.observable()
     }
-    self.error = ko.observable();
 
     var booksUri = '/api/books/';
     var authorsUri = '/api/authors/';
@@ -42,6 +40,13 @@
         });
     }
 
+    function getAuthors() {
+        ajaxHelper(authorsUri, 'GET').done(function (data) {
+            self.authors(data);
+        });
+    }
+
+
     self.addBook = function (formElement) {
         var book = {
             AuthorId: self.newBook.Author().Id,
@@ -55,7 +60,6 @@
             self.books.push(item);
         });
     }
-
 
     // Fetch the initial data.
     getAllBooks();
