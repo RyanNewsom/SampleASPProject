@@ -1,5 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
+    //ko = knockout
+    //knockout library provides us with observabled which get notified of data changes
     self.books = ko.observableArray();
     self.error = ko.observable();
 
